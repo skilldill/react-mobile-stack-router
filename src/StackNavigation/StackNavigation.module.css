@@ -1,0 +1,99 @@
+body {
+    touch-action: none;
+    overflow: hidden;
+}
+
+.stackNavigation {
+    position: relative;
+    height: 100vh;
+}
+
+.screenAndroid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #fff;
+}
+
+
+/* IOS */
+@keyframes translationForwardIOS {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes translationBackIOS {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.screenIOS {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #fff;
+    transition: all .2s;
+    box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.212);
+}
+
+.screenIOSanimated {
+    animation: translationForwardIOS .3s ease-out 0s;
+}
+
+.screenIOSclose {
+    animation: translationBackIOS .3s ease-out 0s;
+}
+
+.screenIOStranslated {
+    transition: all .4s;
+    transform: translateX(-15%);
+}
+
+/* Android */
+@keyframes translationForwardAndroid {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes translationBackAndroid {
+    0% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.screenAndroid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #fff;
+    transition: all .2s;
+    box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.212);
+}
+
+.screenAndroidAnimated {
+    animation: translationForwardAndroid .3s ease-out 0s;
+}
+
+.screenAndroidClose {
+    animation: translationBackAndroid .3s ease-out 0s;
+}

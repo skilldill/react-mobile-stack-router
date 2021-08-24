@@ -1,0 +1,25 @@
+.tabs {
+    /* height: 90%; */
+}
+
+.tab {
+    height: 100%;
+    overflow: hidden;
+}
+
+.tabbar {
+    z-index: 2000;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fafafa;
+    border-top: .5px solid #ccc;
+}
+
+.tabbarContent {
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
