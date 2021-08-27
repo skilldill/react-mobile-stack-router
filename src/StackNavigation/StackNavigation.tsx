@@ -39,7 +39,7 @@ export const Stack: FC<StackProps> = (props) => {
                             animated
                             key={i} 
                             index={i} 
-                            closing={screen.state === 'closing'}
+                            closing={screen.state === 'closing' || screen.state === 'handleClosing'}
                         >
                             {stackScreensMap[screen.name]}
                         </ScreenAndroid>
@@ -69,7 +69,7 @@ export const Stack: FC<StackProps> = (props) => {
                         animated
                         key={i} 
                         index={i} 
-                        closing={screen.state === 'closing'}
+                        closing={screen.state === 'closing' || screen.state === 'handleClosing'}
                         translated={i !== (stackMap[name].history.length - 1) && 
                             stackMap[name].history[stackMap[name].history.length - 1].state === 'show'
                         }

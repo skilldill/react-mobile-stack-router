@@ -1,8 +1,10 @@
 import {createContext} from "react";
 
+export type ScreenStateType = 'show' | 'closing' | 'handleClosing';
+
 interface MobileNavigationContextModel {
     activeStack: string | undefined
-    stackMap: {[key: string]: {history: {name: string, state: 'show' | 'closing'}[]}};
+    stackMap: {[key: string]: {history: {name: string, state: ScreenStateType}[]}};
     platform: 'android' | 'ios';
     params: any;
 

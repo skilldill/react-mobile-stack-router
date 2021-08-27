@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { CSSProperties, FC } from "react";
 import cn from "classnames";
 
 import styles from "./StackNavigation.module.css";
@@ -33,6 +33,12 @@ export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
         }
     }
 
+    const translateStyle: CSSProperties = {
+        transform: animated ? `translate(${stateTranslateX}px)` : 'none',
+        zIndex: 1000 + index,
+        transition: stateTranslateX > 0 ? 'none' : 'all .2s',
+    }
+
     return (
         <div 
             onTouchStart={handleTouchStart()}
@@ -44,7 +50,7 @@ export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
                 [styles.screenIOSclose]: closing,
                 [styles.screenIOStranslated]: translated,
             })} 
-            style={{zIndex: 1000 + index}}
+            style={translateStyle}
         >
             {children}
         </div>
