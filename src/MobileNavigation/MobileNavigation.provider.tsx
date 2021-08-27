@@ -32,10 +32,10 @@ export const MobileNavigation: FC<MobileNavigationModel> = (props) => {
         return add;
     }
 
-    const back = (stackName: string) => {
+    const back = (stackName: string, handleClosing?: boolean) => {
         const prepareStacksMap = {...stackMap};
 
-        prepareStacksMap[stackName].history[prepareStacksMap[stackName].history.length - 1].state = "closing";
+        prepareStacksMap[stackName].history[prepareStacksMap[stackName].history.length - 1].state = handleClosing ? "handleClosing" : "closing";
         setStackMap(prepareStacksMap);
 
         const timeout = setTimeout(() => {

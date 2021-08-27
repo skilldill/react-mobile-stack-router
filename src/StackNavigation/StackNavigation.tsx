@@ -58,6 +58,7 @@ export const Stack: FC<StackProps> = (props) => {
                     stackMap[name].history.length > 0 && 
                     stackMap[name].history[stackMap[name].history.length - 1].state === 'show'
                 }
+                screenState="show"
             >
                 {(children as any[])[0]}
             </ScreenIOS>
@@ -69,7 +70,7 @@ export const Stack: FC<StackProps> = (props) => {
                         animated
                         key={i} 
                         index={i} 
-                        closing={screen.state === 'closing' || screen.state === 'handleClosing'}
+                        screenState={screen.state}
                         translated={i !== (stackMap[name].history.length - 1) && 
                             stackMap[name].history[stackMap[name].history.length - 1].state === 'show'
                         }

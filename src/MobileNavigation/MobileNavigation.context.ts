@@ -10,7 +10,7 @@ interface MobileNavigationContextModel {
 
     setActiveStack: (stackName: string) => void;
     push: (stackName: string, name: string, params?: any) => void;
-    back: (stackName: string) => void;
+    back: (stackName: string, handleClosing?: boolean) => void;
     addStack: (name: string) => void;
 }
 

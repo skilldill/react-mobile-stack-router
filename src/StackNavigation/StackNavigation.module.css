@@ -54,7 +54,7 @@ body {
 
 .screenIOStranslated {
     transition: all .4s;
-    transform: translateX(-15%);
+    transform: translateX(-15%) !important;
 }
 
 /* Android */

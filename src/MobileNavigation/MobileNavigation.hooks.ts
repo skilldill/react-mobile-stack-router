@@ -33,6 +33,7 @@ export const MobileNavigationService = (stackName: string) => {
     const history = {
         push: (name: string) => navigation.push(stackName, name),
         back: () => navigation.back(stackName),
+        handleClosing: () => navigation.back(stackName, true),
     }
 
     return {
