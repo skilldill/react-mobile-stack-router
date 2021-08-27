@@ -14,7 +14,7 @@ interface StackProps {
 export const Stack: FC<StackProps> = (props) => {
     const {children, name} = props;
 
-    const {addStack, activeStack, stackMap, platform} = MobileNavigationService(name);
+    const {addStack, activeStack, stackMap, platform, prelastScreenState} = MobileNavigationService(name);
 
     useEffect(() => {
         addStack(name);
@@ -39,7 +39,7 @@ export const Stack: FC<StackProps> = (props) => {
                             animated
                             key={i} 
                             index={i} 
-                            closing={screen.state === 'closing' || screen.state === 'handleClosing'}
+                            closing={screen.showState === 'closing' || screen.showState === 'handleClosing'}
                         >
                             {stackScreensMap[screen.name]}
                         </ScreenAndroid>
@@ -56,9 +56,10 @@ export const Stack: FC<StackProps> = (props) => {
                 index={0} 
                 translated={stackMap[name] && 
                     stackMap[name].history.length > 0 && 
-                    stackMap[name].history[stackMap[name].history.length - 1].state === 'show'
+                    stackMap[name].history[stackMap[name].history.length - 1].showState === 'show'
                 }
-                screenState="show"
+                screenShowState="show"
+                translateState={(stackMap[name] && stackMap[name].history && stackMap[name].history.length === 1) ? prelastScreenState : null}
             >
                 {(children as any[])[0]}
             </ScreenIOS>
@@ -69,11 +70,12 @@ export const Stack: FC<StackProps> = (props) => {
                         stackName={name}
                         animated
                         key={i} 
-                        index={i} 
-                        screenState={screen.state}
+                        index={i + 1} 
+                        screenShowState={screen.showState}
                         translated={i !== (stackMap[name].history.length - 1) && 
-                            stackMap[name].history[stackMap[name].history.length - 1].state === 'show'
+                            stackMap[name].history[stackMap[name].history.length - 1].showState === 'show'
                         }
+                        translateState={i === stackMap[name].history.length - 2 ? prelastScreenState : null}
                     >
                         {stackScreensMap[screen.name]}
                     </ScreenIOS>

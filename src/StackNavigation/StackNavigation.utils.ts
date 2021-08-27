@@ -7,3 +7,7 @@ export const createStackScreensMap = (children: any) => {
 
     return stackScreensMap;
 }
+
+export const getWidthPercents = (percents: number) => {
+    return (window.innerWidth / 100) * percents;
+}

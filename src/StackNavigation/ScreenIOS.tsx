@@ -1,21 +1,23 @@
-import React, { CSSProperties, FC, useState } from "react";
+import React, { CSSProperties, FC, useEffect, useState } from "react";
 import cn from "classnames";
 
 import styles from "./StackNavigation.module.css";
 import { useTouch } from "../hooks";
 import { MobileNavigationService } from "../MobileNavigation";
 import { ScreenStateType } from "../MobileNavigation/MobileNavigation.context";
+import { getWidthPercents } from "./StackNavigation.utils";
 
 interface ScreenIOSProps {
     index: number;
     stackName: string;
     translated?: boolean;
     animated?: boolean;
-    screenState: ScreenStateType
+    screenShowState: ScreenStateType;
+    translateState?: any
 }
 
 export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
-    const {children, index, screenState, translated, animated, stackName} = props;
+    const {children, index, screenShowState, translated, animated, stackName, translateState} = props;
 
     const [touched, setTouched] = useState(false);
 
@@ -33,6 +35,11 @@ export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
         setTouched(true);
     }
 
+    const onTouchMove = () => {
+        const translated = getWidthPercents(15) - stateTranslateX / 30;
+        history.setPrelastScreenState({ translated });
+    }
+
     const onTouchEnd = () => {
         setTouched(false);
 
@@ -44,6 +51,7 @@ export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
                 history.handleClosing();
             } else {
                 setStateTranslateX(0);
+                history.setPrelastScreenState({ translated: getWidthPercents(15) });
             }
         }
     }
@@ -54,18 +62,31 @@ export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
         transition: touched ? 'none' : 'all .2s',
     }
 
+    const styleWithTranslateState = (!!translateState && !!translateState.translated) ? {
+        ...translateStyle,
+        transform: `translateX(-${translateState.translated}px) !important`,
+    } : translateStyle;
+
+    useEffect(() => {
+        console.clear();
+        if (translateState) {
+            console.log(index, styleWithTranslateState);
+        }
+    }, [translateState])
+
+
     return (
         <div 
             onTouchStart={handleTouchStart(onToucheStart)}
-            onTouchMove={handleTouchMove()}
+            onTouchMove={handleTouchMove(onTouchMove)}
             onTouchEnd={handleTouchEnd(onTouchEnd)}
             className={cn({
                 [styles.screenIOS]: true,
                 [styles.screenIOSanimated]: animated,
-                [styles.screenIOSclose]: screenState === 'closing',
+                [styles.screenIOSclose]: screenShowState === 'closing',
                 [styles.screenIOStranslated]: translated,
             })} 
-            style={translateStyle}
+            style={styleWithTranslateState}
         >
             {children}
         </div>

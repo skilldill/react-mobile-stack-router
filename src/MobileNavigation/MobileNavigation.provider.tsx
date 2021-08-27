@@ -1,6 +1,6 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
-import {MobileNavigationContext, ScreenStateType} from "./MobileNavigation.context";
+import {MobileNavigationContext, StackScreenObject} from "./MobileNavigation.context";
 
 interface MobileNavigationModel {
     platform?: 'android' | 'ios'
@@ -9,9 +9,15 @@ interface MobileNavigationModel {
 export const MobileNavigation: FC<MobileNavigationModel> = (props) => {
     const {children, platform} = props;
 
-    const [stackMap, setStackMap] = useState<{[key: string]: {history: {name: string, state: ScreenStateType }[]}}>({});
+    const [stackMap, setStackMap] = useState<{[key: string]: {history: StackScreenObject[]}}>({});
     const [activeStack, setActiveStack] = useState<string>();
     const [params, setParams] = useState<any>();
+
+    const [prelastScreenState, setPrelastScreenState] = useState({});
+
+    useEffect(() => {
+        console.log(prelastScreenState);
+    }, [prelastScreenState])
 
     const addStack = () => {
         let inProcess = false;
@@ -35,7 +41,7 @@ export const MobileNavigation: FC<MobileNavigationModel> = (props) => {
     const back = (stackName: string, handleClosing?: boolean) => {
         const prepareStacksMap = {...stackMap};
 
-        prepareStacksMap[stackName].history[prepareStacksMap[stackName].history.length - 1].state = handleClosing ? "handleClosing" : "closing";
+        prepareStacksMap[stackName].history[prepareStacksMap[stackName].history.length - 1].showState = handleClosing ? "handleClosing" : "closing";
         setStackMap(prepareStacksMap);
 
         const timeout = setTimeout(() => {
@@ -50,7 +56,7 @@ export const MobileNavigation: FC<MobileNavigationModel> = (props) => {
         !!params && setParams(params);
 
         const prepareStacksMap = {...stackMap};
-        prepareStacksMap[stackName].history.push({name: screenName, state: 'show'});
+        prepareStacksMap[stackName].history.push({name: screenName, showState: 'show', translateState: null});
         setStackMap(prepareStacksMap);
     }
 
@@ -59,11 +65,13 @@ export const MobileNavigation: FC<MobileNavigationModel> = (props) => {
         stackMap,
         platform: !!platform ? platform : 'ios', 
         params,
+        prelastScreenState,
 
         setActiveStack,
         back,
         push,
         addStack: addStack(),
+        setPrelastScreenState
     }
 
     return (

@@ -39,10 +39,12 @@ export const MobileNavigationService = (stackName: string) => {
     return {
         ...history,
 
+        prelastScreenState: navigation.prelastScreenState,
         platform: navigation.platform,
         stackMap: navigation.stackMap,
         activeStack: navigation.activeStack,
         addStack: navigation.addStack,
         setActiveStack: navigation.setActiveStack,
+        setPrelastScreenState: navigation.setPrelastScreenState
     };
 }
