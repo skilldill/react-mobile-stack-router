@@ -62,7 +62,7 @@ export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
 
     const translateStyle: CSSProperties = {
         transform: (animated || isPrelast) && stateTranslateX >= 0  ? 
-            `translateX(${history.translateX > 0 && isPrelast ? (history.translateX / 5 - window.innerWidth * 0.15) : stateTranslateX}px)` : 
+            `translateX(${history.translateX > 0 && isPrelast ? (history.translateX / 10 - window.innerWidth * 0.15) : stateTranslateX}px)` : 
             'none',
 
         zIndex: 1000 + index,
