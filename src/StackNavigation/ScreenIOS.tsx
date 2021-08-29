@@ -56,13 +56,18 @@ export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
         }
     }
 
+    useEffect(() => {
+        console.log(index, isPrelast, !fromHistory, history.stackMap[stackName] && history.stackMap[stackName].history.length === 1);
+    }, [isPrelast, fromHistory])
+
     const translateStyle: CSSProperties = {
-        transform: animated ? `translateX(${history.translateX > 0 && isPrelast ? (history.translateX / 5 - window.innerWidth * 0.15) : stateTranslateX}px)` : 'none',
+        transform: (animated || isPrelast) && stateTranslateX >= 0  ? 
+            `translateX(${history.translateX > 0 && isPrelast ? (history.translateX / 5 - window.innerWidth * 0.15) : stateTranslateX}px)` : 
+            'none',
+
         zIndex: 1000 + index,
         transition: touched || history.translateX > 0 ? 'none' : 'all .2s',
     }
-
-    useEffect(() => {console.log(history.translateX)}, [history.translateX])
 
     return (
         <div 
