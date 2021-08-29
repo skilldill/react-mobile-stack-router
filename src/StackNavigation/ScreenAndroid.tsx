@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { CSSProperties, FC, useState } from "react";
 import cn from "classnames";
 
 import styles from "./StackNavigation.module.css";
@@ -15,34 +15,62 @@ interface ScreenAndroidProps {
 export const ScreenAndroid: FC<ScreenAndroidProps> = (props) => {
     const {children, index, closing, animated, stackName} = props;
 
+    const [touched, setTouched] = useState(false);
+
     const history = MobileNavigationService(stackName);
     const {
         handleTouchStart, 
         handleTouchMove, 
         handleTouchEnd,
         stateStartX,
-        stateTranslateX
+        stateTranslateX,
+        setStateTranslateX
     } = useTouch();
 
+    const onTouchStart = () => {
+        setTouched(true);
+    }
+
+    const onTouchMove = () => {
+        history.setTranslateX(stateTranslateX);
+    }
+
     const onTouchEnd = () => {
+        setTouched(false);
+        history.setTranslateX(0);
         const diff = stateTranslateX - stateStartX;
-        
-        if (animated && stateStartX < 100 && diff >= 100) {
-            history.back();
+
+        if (animated && stateStartX < 100) {
+            if (diff >= 100) {
+                setStateTranslateX(window.innerWidth);    
+                history.handleBack();
+            } else {
+                setStateTranslateX(0);
+            }
         }
+    }
+
+    const translateStyle: CSSProperties = {
+        transform: animated && stateTranslateX >= 0  ? 
+            `translateX(${stateTranslateX}px)` : 
+            'none',
+
+        opacity: 1 - stateTranslateX / 1000,
+        zIndex: 1000 + index,
+        transition: touched || history.translateX > 0 ? 'none' : 'all .2s',
     }
 
     return (
         <div 
-            onTouchStart={handleTouchStart()}
-            onTouchMove={handleTouchMove()}
+            onTouchStart={handleTouchStart(onTouchStart)}
+            onTouchMove={handleTouchMove(onTouchMove)}
             onTouchEnd={handleTouchEnd(onTouchEnd)}
             className={cn({
                 [styles.screenAndroid]: true,
                 [styles.screenAndroidAnimated]: animated,
                 [styles.screenAndroidClose]: closing,
             })} 
-            style={{zIndex: 1000 + index}}
+            style={translateStyle}
         >
             {children}
         </div>

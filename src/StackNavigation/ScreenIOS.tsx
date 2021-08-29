@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useEffect, useMemo, useState } from "react";
+import React, { CSSProperties, FC, useMemo, useState } from "react";
 import cn from "classnames";
 
 import styles from "./StackNavigation.module.css";
@@ -55,10 +55,6 @@ export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
             }
         }
     }
-
-    useEffect(() => {
-        console.log(index, isPrelast, !fromHistory, history.stackMap[stackName] && history.stackMap[stackName].history.length === 1);
-    }, [isPrelast, fromHistory])
 
     const translateStyle: CSSProperties = {
         transform: (animated || isPrelast) && stateTranslateX >= 0  ? 
