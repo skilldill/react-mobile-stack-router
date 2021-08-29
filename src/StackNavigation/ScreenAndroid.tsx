@@ -55,7 +55,7 @@ export const ScreenAndroid: FC<ScreenAndroidProps> = (props) => {
             `translateX(${stateTranslateX}px)` : 
             'none',
 
-        opacity: 1 - stateTranslateX / 1000,
+        opacity: animated ? 1 - stateTranslateX / 1000 : 1,
         zIndex: 1000 + index,
         transition: touched || history.translateX > 0 ? 'none' : 'all .2s',
     }
