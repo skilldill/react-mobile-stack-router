@@ -73,6 +73,7 @@ export const Stack: FC<StackProps> = (props) => {
                         translated={i !== (stackMap[name].history.length - 1) && 
                             !stackMap[name].history[stackMap[name].history.length - 1].closingType
                         }
+                        fromHistory
                     >
                         {stackScreensMap[screen.name]}
                     </ScreenIOS>

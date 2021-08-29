@@ -11,10 +11,11 @@ interface ScreenIOSProps {
     closing?: boolean;
     translated?: boolean;
     animated?: boolean;
+    fromHistory?: boolean;
 }
 
 export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
-    const {children, index, closing, translated, animated, stackName} = props;
+    const {children, index, closing, translated, animated, stackName, fromHistory} = props;
 
     const [touched, setTouched] = useState(false);
 
@@ -28,7 +29,7 @@ export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
         setStateTranslateX
     } = useTouch();
 
-    const isPrelast = useMemo(() => (!!history.stackMap[stackName] && history.stackMap[stackName].history.length === 1 && index === 0) ||
+    const isPrelast = useMemo(() => (!!history.stackMap[stackName] && history.stackMap[stackName].history.length === 1 && index === 0 && !fromHistory) ||
         (!!history.stackMap[stackName] && history.stackMap[stackName].history.length > 1 && index === history.stackMap[stackName].history.length - 2)
     , [index, history.stackMap])
 
