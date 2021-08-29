@@ -19,9 +19,11 @@ export const useStackParams = <T = any>() => {
 
 export const useMobileNavigation = () => {
     const navigation = useContext(MobileNavigationContext);
-    const changeStack = navigation.setActiveStack;
-
-    return {changeStack};
+    
+    return {
+        changeStack: navigation.setActiveStack,
+        translateX: navigation.translateX,
+    }
 }
 
 /**
@@ -33,6 +35,7 @@ export const MobileNavigationService = (stackName: string) => {
     const history = {
         push: (name: string) => navigation.push(stackName, name),
         back: () => navigation.back(stackName),
+        handleBack: () => navigation.back(stackName, true),
     }
 
     return {
@@ -43,5 +46,7 @@ export const MobileNavigationService = (stackName: string) => {
         activeStack: navigation.activeStack,
         addStack: navigation.addStack,
         setActiveStack: navigation.setActiveStack,
+        translateX: navigation.translateX,
+        setTranslateX: navigation.setTranslateX,
     };
 }

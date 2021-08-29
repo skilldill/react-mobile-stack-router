@@ -39,7 +39,7 @@ export const Stack: FC<StackProps> = (props) => {
                             animated
                             key={i} 
                             index={i} 
-                            closing={screen.state === 'closing'}
+                            closing={screen.closingType === 'default'}
                         >
                             {stackScreensMap[screen.name]}
                         </ScreenAndroid>
@@ -56,7 +56,7 @@ export const Stack: FC<StackProps> = (props) => {
                 index={0} 
                 translated={stackMap[name] && 
                     stackMap[name].history.length > 0 && 
-                    stackMap[name].history[stackMap[name].history.length - 1].state === 'show'
+                    !stackMap[name].history[stackMap[name].history.length - 1].closingType
                 }
             >
                 {(children as any[])[0]}
@@ -69,9 +69,9 @@ export const Stack: FC<StackProps> = (props) => {
                         animated
                         key={i} 
                         index={i} 
-                        closing={screen.state === 'closing'}
+                        closing={screen.closingType === 'default'}
                         translated={i !== (stackMap[name].history.length - 1) && 
-                            stackMap[name].history[stackMap[name].history.length - 1].state === 'show'
+                            !stackMap[name].history[stackMap[name].history.length - 1].closingType
                         }
                     >
                         {stackScreensMap[screen.name]}

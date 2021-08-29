@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { CSSProperties, FC, useEffect, useMemo, useState } from "react";
 import cn from "classnames";
 
 import styles from "./StackNavigation.module.css";
@@ -16,35 +16,65 @@ interface ScreenIOSProps {
 export const ScreenIOS: FC<ScreenIOSProps> = (props) => {
     const {children, index, closing, translated, animated, stackName} = props;
 
+    const [touched, setTouched] = useState(false);
+
     const history = MobileNavigationService(stackName);
     const {
         handleTouchStart, 
         handleTouchMove, 
         handleTouchEnd,
         stateStartX,
-        stateTranslateX
+        stateTranslateX,
+        setStateTranslateX
     } = useTouch();
 
+    const isPrelast = useMemo(() => (!!history.stackMap[stackName] && history.stackMap[stackName].history.length === 1 && index === 0) ||
+        (!!history.stackMap[stackName] && history.stackMap[stackName].history.length > 1 && index === history.stackMap[stackName].history.length - 2)
+    , [index, history.stackMap])
+
+    const onTouchStart = () => {
+        setTouched(true);
+    }
+
+    const onTouchMove = () => {
+        history.setTranslateX(stateTranslateX);
+    }
+
     const onTouchEnd = () => {
+        setTouched(false);
+        history.setTranslateX(0);
         const diff = stateTranslateX - stateStartX;
-        
-        if (animated && stateStartX < 100 && diff >= 100) {
-            history.back();
+
+        if (animated && stateStartX < 100) {
+            if (diff >= 100) {
+                setStateTranslateX(window.innerWidth);    
+                history.handleBack();
+            } else {
+                setStateTranslateX(0);
+            }
         }
     }
 
+    const translateStyle: CSSProperties = {
+        transform: animated ? `translateX(${history.translateX > 0 && isPrelast ? (history.translateX / 5 - window.innerWidth * 0.15) : stateTranslateX}px)` : 'none',
+        zIndex: 1000 + index,
+        transition: touched || history.translateX > 0 ? 'none' : 'all .2s',
+    }
+
+    useEffect(() => {console.log(history.translateX)}, [history.translateX])
+
     return (
         <div 
-            onTouchStart={handleTouchStart()}
-            onTouchMove={handleTouchMove()}
+            onTouchStart={handleTouchStart(onTouchStart)}
+            onTouchMove={handleTouchMove(onTouchMove)}
             onTouchEnd={handleTouchEnd(onTouchEnd)}
             className={cn({
                 [styles.screenIOS]: true,
                 [styles.screenIOSanimated]: animated,
                 [styles.screenIOSclose]: closing,
-                [styles.screenIOStranslated]: translated,
+                [styles.screenIOStranslated]: history.translateX === 0 && translated,
             })} 
-            style={{zIndex: 1000 + index}}
+            style={translateStyle}
         >
             {children}
         </div>

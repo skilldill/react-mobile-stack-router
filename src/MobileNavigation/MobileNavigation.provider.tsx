@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 
-import {MobileNavigationContext} from "./MobileNavigation.context";
+import {MobileNavigationContext, ScreenObject} from "./MobileNavigation.context";
 
 interface MobileNavigationModel {
     platform?: 'android' | 'ios'
@@ -9,9 +9,11 @@ interface MobileNavigationModel {
 export const MobileNavigation: FC<MobileNavigationModel> = (props) => {
     const {children, platform} = props;
 
-    const [stackMap, setStackMap] = useState<{[key: string]: {history: {name: string, state: 'show' | 'closing' }[]}}>({});
+    const [stackMap, setStackMap] = useState<{[key: string]: {history: ScreenObject[]}}>({});
     const [activeStack, setActiveStack] = useState<string>();
     const [params, setParams] = useState<any>();
+
+    const [translateX, setTranslateX] = useState(0);
 
     const addStack = () => {
         let inProcess = false;
@@ -32,15 +34,17 @@ export const MobileNavigation: FC<MobileNavigationModel> = (props) => {
         return add;
     }
 
-    const back = (stackName: string) => {
+    const back = (stackName: string, isHandleClose?: boolean) => {
         const prepareStacksMap = {...stackMap};
 
-        prepareStacksMap[stackName].history[prepareStacksMap[stackName].history.length - 1].state = "closing";
+        
+        prepareStacksMap[stackName].history[prepareStacksMap[stackName].history.length - 1].closingType = isHandleClose ? "handleClose" : "default";
         setStackMap(prepareStacksMap);
 
         const timeout = setTimeout(() => {
             const prepareStacksMap = {...stackMap};
             prepareStacksMap[stackName].history.pop();
+            setTranslateX(0);
             setStackMap(prepareStacksMap);
             clearTimeout(timeout);
         }, 200)
@@ -50,7 +54,7 @@ export const MobileNavigation: FC<MobileNavigationModel> = (props) => {
         !!params && setParams(params);
 
         const prepareStacksMap = {...stackMap};
-        prepareStacksMap[stackName].history.push({name: screenName, state: 'show'});
+        prepareStacksMap[stackName].history.push({name: screenName, closingType: null});
         setStackMap(prepareStacksMap);
     }
 
@@ -59,11 +63,13 @@ export const MobileNavigation: FC<MobileNavigationModel> = (props) => {
         stackMap,
         platform: !!platform ? platform : 'ios', 
         params,
+        translateX,
 
         setActiveStack,
         back,
         push,
         addStack: addStack(),
+        setTranslateX
     }
 
     return (
