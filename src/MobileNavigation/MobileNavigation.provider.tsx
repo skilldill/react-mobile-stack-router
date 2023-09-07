@@ -1,74 +1,83 @@
-import React, { FC, useState } from "react";
+import React, { FC, PropsWithChildren, useState } from 'react';
 
-import {MobileNavigationContext} from "./MobileNavigation.context";
+import { MobileNavigationContext } from './MobileNavigation.context';
 
 interface MobileNavigationModel {
-    platform?: 'android' | 'ios'
+  platform?: 'android' | 'ios';
 }
 
-export const MobileNavigation: FC<MobileNavigationModel> = (props) => {
-    const {children, platform} = props;
+export const MobileNavigation: FC<PropsWithChildren<MobileNavigationModel>> = (
+  props,
+) => {
+  const { children, platform } = props;
 
-    const [stackMap, setStackMap] = useState<{[key: string]: {history: {name: string, state: 'show' | 'closing' }[]}}>({});
-    const [activeStack, setActiveStack] = useState<string>();
-    const [params, setParams] = useState<any>();
+  const [stackMap, setStackMap] = useState<{
+    [key: string]: { history: { name: string; state: 'show' | 'closing' }[] };
+  }>({});
+  const [activeStack, setActiveStack] = useState<string>();
+  const [params, setParams] = useState<any>();
 
-    const addStack = () => {
-        let inProcess = false;
+  const addStack = () => {
+    let inProcess = false;
 
-        const add = (name: string) => {
-            if (!inProcess) {
-                inProcess = true;
-                setStackMap((stackMap) => ({ ...stackMap, [name]: {history: []} }));
-                !activeStack && setActiveStack(name);
-                inProcess = false;
-                
-                return;
-            } else {
-                add(name);
-            }
-        }
+    const add = (name: string) => {
+      if (!inProcess) {
+        inProcess = true;
+        setStackMap((stackMap) => ({ ...stackMap, [name]: { history: [] } }));
+        !activeStack && setActiveStack(name);
+        inProcess = false;
 
-        return add;
-    }
+        return;
+      } else {
+        add(name);
+      }
+    };
 
-    const back = (stackName: string) => {
-        const prepareStacksMap = {...stackMap};
+    return add;
+  };
 
-        prepareStacksMap[stackName].history[prepareStacksMap[stackName].history.length - 1].state = "closing";
-        setStackMap(prepareStacksMap);
+  const back = (stackName: string) => {
+    const prepareStacksMap = { ...stackMap };
 
-        const timeout = setTimeout(() => {
-            const prepareStacksMap = {...stackMap};
-            prepareStacksMap[stackName].history.pop();
-            setStackMap(prepareStacksMap);
-            clearTimeout(timeout);
-        }, 200)
-    }
+    prepareStacksMap[stackName].history[
+      prepareStacksMap[stackName].history.length - 1
+    ].state = 'closing';
+    setStackMap(prepareStacksMap);
 
-    const push = (stackName: string, screenName: string, params?: any) => {
-        !!params && setParams(params);
+    const timeout = setTimeout(() => {
+      const prepareStacksMap = { ...stackMap };
+      prepareStacksMap[stackName].history.pop();
+      setStackMap(prepareStacksMap);
+      clearTimeout(timeout);
+    }, 200);
+  };
 
-        const prepareStacksMap = {...stackMap};
-        prepareStacksMap[stackName].history.push({name: screenName, state: 'show'});
-        setStackMap(prepareStacksMap);
-    }
+  const push = (stackName: string, screenName: string, params?: any) => {
+    !!params && setParams(params);
 
-    const values = {
-        activeStack,
-        stackMap,
-        platform: !!platform ? platform : 'ios', 
-        params,
+    const prepareStacksMap = { ...stackMap };
+    prepareStacksMap[stackName].history.push({
+      name: screenName,
+      state: 'show',
+    });
+    setStackMap(prepareStacksMap);
+  };
 
-        setActiveStack,
-        back,
-        push,
-        addStack: addStack(),
-    }
+  const values = {
+    activeStack,
+    stackMap,
+    platform: !!platform ? platform : 'ios',
+    params,
 
-    return (
-        <MobileNavigationContext.Provider value={values}>
-            {children}
-        </MobileNavigationContext.Provider>
-    )
-}
+    setActiveStack,
+    back,
+    push,
+    addStack: addStack(),
+  };
+
+  return (
+    <MobileNavigationContext.Provider value={values}>
+      {children}
+    </MobileNavigationContext.Provider>
+  );
+};

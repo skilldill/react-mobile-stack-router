@@ -1,7 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, PropsWithChildren } from 'react';
 
 interface StackScreenProps {
-    name: string;
+  name: string;
 }
 
-export const StackScreen: FC<StackScreenProps> = ({children}) => <React.Fragment>{children}</React.Fragment>;
+export const StackScreen: FC<PropsWithChildren<StackScreenProps>> = ({
+  children,
+}) => <React.Fragment>{children}</React.Fragment>;
