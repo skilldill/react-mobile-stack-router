@@ -4,7 +4,7 @@ import 'react-mobile-stack-router/dist/index.css';
 import { ExampleApp } from './example';
 
 const App = () => {
-  return <ExampleApp />
-}
+  return <ExampleApp />;
+};
 
-export default App
+export default App;

@@ -1,18 +1,21 @@
-import {createContext} from "react";
+import { createContext } from 'react';
 
 interface MobileNavigationContextModel {
-    activeStack: string | undefined
-    stackMap: {[key: string]: {history: {name: string, state: 'show' | 'closing'}[]}};
-    platform: 'android' | 'ios';
-    params: any;
+  activeStack: string | undefined;
+  stackMap: {
+    [key: string]: { history: { name: string; state: 'show' | 'closing' }[] };
+  };
+  platform: 'android' | 'ios';
+  params: any;
 
-    setActiveStack: (stackName: string) => void;
-    push: (stackName: string, name: string, params?: any) => void;
-    back: (stackName: string) => void;
-    addStack: (name: string) => void;
+  setActiveStack: (stackName: string) => void;
+  push: (stackName: string, name: string, params?: any) => void;
+  back: (stackName: string) => void;
+  addStack: (name: string) => void;
 }
 
-export const MobileNavigationContext = createContext<MobileNavigationContextModel>({
+export const MobileNavigationContext =
+  createContext<MobileNavigationContextModel>({
     activeStack: undefined,
     stackMap: {},
     platform: 'ios',
@@ -22,4 +25,4 @@ export const MobileNavigationContext = createContext<MobileNavigationContextMode
     push: () => {},
     back: () => {},
     addStack: () => {},
-})
+  });

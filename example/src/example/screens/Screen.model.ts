@@ -1,3 +1,3 @@
 export interface ScreenProps {
-    stackName: string
+  stackName: string;
 }

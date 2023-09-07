@@ -1,2 +1,2 @@
-export { Stack } from "./StackNavigation";
-export { StackScreen } from "./StackScreen";
+export { Stack } from './StackNavigation';
+export { StackScreen } from './StackScreen';
