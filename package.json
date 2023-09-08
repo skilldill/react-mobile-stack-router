@@ -1,6 +1,6 @@
 {
   "name": "react-mobile-stack-router",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Made with create-react-library",
   "author": "skilldill",
   "license": "MIT",
@@ -8,7 +8,7 @@
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
-  "keywords": ["react", "webview", "modals", "tabs", "navigation", "mobile navigation"],
+  "keywords": ["react", "webview", "modals", "tabs", "navigation", "mobile navigation", "capacitor", "cordova"],
   "engines": {
     "node": ">=10"
   },

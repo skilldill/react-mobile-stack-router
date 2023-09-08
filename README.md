@@ -4,6 +4,13 @@
 
 ## Use with webview for creation pretty navigation 📱
 
+### Navigation like IOS
+![example](https://github.com/skilldill/react-mobile-stack-router/blob/master/blob/ios.gif?raw=true)
+
+### Navigation like Android
+![example](https://github.com/skilldill/react-mobile-stack-router/blob/master/blob/android.gif?raw=true)
+
+
 ⭐️⭐️⭐️ Build a beautiful mobile app using React and Webview ⭐️⭐️⭐️
 
 You will get navigation with animation like ios and android without unnecessary things 😏
@@ -12,24 +19,11 @@ Introducing "React Mobile Stack Router"
 
 ## Description
 
-React Mobile Stack Router is a comprehensive React library specifically crafted to provide a robust and feature-rich mobile navigation experience. Utilizing the power of React, this library empowers developers to create dynamic and efficient navigation stacks similar to those found in popular mobile platforms.
+**react-mobile-stack-router** is a comprehensive React library specifically crafted to provide a robust and feature-rich mobile navigation experience. Utilizing the power of React, this library empowers developers to create dynamic and efficient navigation stacks similar to those found in popular mobile platforms.
 
-Key Features:
+Regardless of your mobile application's complexity, **react-mobile-stack-router** provides an intuitive and efficient solution for managing the navigation stack. Streamline your development process and deliver an exceptional mobile navigation experience to your users with **react-mobile-stack-router**.
 
-- Mobile Stack Navigation: React Mobile Stack Router offers a stack-based navigation system that allows users to navigate through different screens in a mobile application with ease. It provides a smooth transition between screens, maintaining a consistent and intuitive user flow.
-
-- Flexible Configuration: This library provides a flexible configuration setup, allowing developers to customize the navigation stack as per their application's requirements. Developers have full control over the navigation stack, including the ability to define screens, transitions, and animations.
-
-- React Integration: React Mobile Stack Router seamlessly integrates with React applications, leveraging the power and flexibility of React components. It provides a straightforward API that aligns with React's component-based architecture.
-
-- Navigation Hooks: The library offers navigation hooks, empowering developers to interact with the navigation stack and access essential features like pushing, popping, or replacing screens programmatically. This enables fine-grained control over the navigation flow and allows for dynamic navigation handling.
-
-- Tab-based Navigation: React Mobile Stack Router enables you to implement tab-based navigation patterns commonly found in mobile applications. Users can switch between different tabs, each representing a specific section or functionality of your app, providing them easy access to different views or features.
-
-
-Regardless of your mobile application's complexity, React Mobile Stack Router provides an intuitive and efficient solution for managing the navigation stack. Streamline your development process and deliver an exceptional mobile navigation experience to your users with React Mobile Stack Router.
-
-Start implementing React Mobile Stack Router in your React projects today and unlock a new level of mobile navigation prowess!
+Start implementing **react-mobile-stack-router** in your React projects today and unlock a new level of mobile navigation prowess!
 
 ## Install
 
@@ -213,6 +207,9 @@ const MobileApp = () => {
 };
 ```
 
+### See [example](https://skilldill.github.io/react-mobile-stack-router/) 👀
+
+
 ### Props
 
 | MobileNavigation | | | |
@@ -220,6 +217,8 @@ const MobileApp = () => {
 | **Prop**    | **Values** | **Default Values** | **Required** |
 | platform  | `ios`, `android` | `ios` | true |
 | children | `ReactNode` | *none* | true |
+
+<hr>
 
 | Stack | | | |
 | -------- | ------- | ------- | ------- |
@@ -229,10 +228,14 @@ const MobileApp = () => {
 | if `Stack` in `Tab` | | | |
 | key  | `string` | *none* | true |
 
+<hr>
+
 | Tabs | | | |
 | -------- | ------- | ------- | ------- |
 | **Prop**    | **Values** | **Default Values** | **Required** |
 | onChange  | `(tabName: string) => void` | *none* | false |
+
+<hr>
 
 | Tab | | | |
 | -------- | ------- | ------- | ------- |
@@ -240,11 +243,15 @@ const MobileApp = () => {
 | name  | `string` | *none* | true |
 | children | `ReactNode` | *none* | true |
 
+<hr>
+
 | StackScreen | | | |
 | -------- | ------- | ------- | ------- |
 | **Prop**    | **Values** | **Default Values** | **Required** |
 | name  | `string` | *none* | true |
 | children | `ReactNode` | *none* | true |
+
+<hr>
 
 | useStackNavigation | | | |
 | -------- | ------- | ------- | ------- |
